@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "./App.css";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/views/home/Home";
 import Navigation from "./components/layouts/Navigation";
@@ -9,32 +9,25 @@ import ProductCreate from "./components/views/productCreate/ProductCreate";
 import ProductEdit from "./components/views/productEdit/ProductEdit";
 import Error404 from "./components/views/error404/Error404";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "./config/axiosInit"
+
 
 function App() {
-  const [products, setProducts] = useState([]);
-  //uso de variable de entorno
-  const URL = process.env.REACT_APP_API_HAMBURGUESERIA
-  
-  useEffect(()=>{
+  const [products, setProducts] =useState([]);
+  useEffect(()=> {
     getApi();
   },[]);
-  
 
-  const getApi= async ()=>{
+  const getApi=async ()=>{
     try {
-      /* const res = await fetch(URL);
+      const res= await fetch('http://localhost:3001/products');
       const productApi = await res.json();
-      setProducts(productApi); */
-
-      const res = await axios.get(URL);
-     // console.log(res?.data);
-      const productApi = res?.data;
       setProducts(productApi);
-    } catch (error) {
+    }catch (error){
       console.log(error);
     }
-  };
+  }
+
+  
   
   return (
     <div>
@@ -42,18 +35,18 @@ function App() {
         <Navigation />
         <main>
           <Routes>
-            <Route exact path="/" element={<Home products={products}/>} />
+            <Route exact path="/" element={<Home />} />
             <Route
               exact
               path="/product/table"
               element={
-                <ProductsTable products={products} URL={URL} getApi={getApi} />
+                <ProductsTable  />
               }
             />
             <Route
               exact
               path="/product/create"
-              element={<ProductCreate URL={URL} getApi={getApi}/>}
+              element={<ProductCreate  />}
             />
             <Route
               exact
